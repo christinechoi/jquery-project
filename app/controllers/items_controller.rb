@@ -29,6 +29,10 @@ class ItemsController < ApplicationController
   def show
     @item = Item.find(params[:id])
     @collection = @item.collection_id
+    respond_to do |f|
+      f.html { render :show }
+      f.json { render json: @item }
+    end
   end
 
   def edit
