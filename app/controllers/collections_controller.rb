@@ -24,6 +24,19 @@ class CollectionsController < ApplicationController
     @collection_items = Array.new 
     @collection_items += @collection.items 
 
+    @collections = current_user.collections.uniq
+
+
+    if @collections.count > 1
+      @clx_ids = current_user.collection_ids.uniq #array of collections
+      # binding.pry
+      @next_ind = @clx_ids.index(@collection.id) + 1 #index no of next clx
+      @next_clx = @collections[@next_ind]
+      binding.pry
+    end
+
+
+
     respond_to do |f|
       f.html { render :show }
       f.json { render json: @collection }
