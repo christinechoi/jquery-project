@@ -9,6 +9,8 @@ end
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'active_model_serializers'
+
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
