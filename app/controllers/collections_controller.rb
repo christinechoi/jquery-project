@@ -20,9 +20,14 @@ class CollectionsController < ApplicationController
   end
 
   def show
-     @collection = Collection.find(params[:id])
-     @collection_items = Array.new 
-     @collection_items += @collection.items 
+    @collection = Collection.find(params[:id])
+    @collection_items = Array.new 
+    @collection_items += @collection.items 
+
+    respond_to do |f|
+      f.html { render :show }
+      f.json { render json: @collection }
+    end
   end
 
   def destroy
