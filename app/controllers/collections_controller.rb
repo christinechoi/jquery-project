@@ -2,6 +2,11 @@ class CollectionsController < ApplicationController
   
   def index
     @collections = current_user.collections.uniq
+    
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @collections }
+    end
   end
 
   def new
@@ -22,8 +27,11 @@ class CollectionsController < ApplicationController
   def show
     @collection = Collection.find(params[:id])
     @collections = current_user.collections.uniq
+    
+    @collection_items = Array.new 
+    @collection_items += @collection.items 
 
-     respond_to do |format|
+    respond_to do |format|
       format.html { render :show }
       format.json { render json: @collection }
     end
