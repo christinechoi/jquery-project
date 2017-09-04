@@ -1,10 +1,21 @@
 
 <h2>Your collections:</h2><br>
 
-<% @collections.each do |collection| %>
-  <h4><%= link_to "#{collection.title}", collection_path(collection) %></h4>
-<% end %><br>
+<h4 class="collections" data-id=""></h4>
 
-<a href="/collections/new" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-pencil"></span> Create New Collection
-</a>
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+  $.get("/collections.json", function(data) {
+
+    var collections = "";
+
+    for (i = 0; i < data.length; i++) {
+      var collection = data[i]["title"];
+      var collectionId = data[i]["id"];
+      collections += "<a href='collections/" + collectionId + "'> " + collection + "<br></a>";
+    }
+    $(".collections").html(collections);
+  });
+});
+</script>
