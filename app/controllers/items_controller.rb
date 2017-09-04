@@ -19,7 +19,7 @@ class ItemsController < ApplicationController
     @item = current_user.items.build(item_params)
     @item.collection_id = params[:collection_id]
     if @item.save
-      redirect_to collection_item_path(@item.collection_id, @item.id)
+      render json: @item, status: 201
     else
       flash[:error] = "Sorry, please try again."
       render :new
