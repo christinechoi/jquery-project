@@ -1,11 +1,10 @@
 <table>
   <h2 class="collectionTitle"><%= @collection.title %></h2>
   
-  <p class="hitems">
-    <h2><% @collection.items.each do |item| %> </h2>
-      <h3><%= link_to "#{item.brand} #{item.name}" %></h3>
-    <% end %>
-  </p>
+  <h2 class="hitems"><% @collection.items.each do |item| %> </h2>
+    <h3><%= link_to "#{item.brand} #{item.name}" %></h3>
+  <% end %>
+  
 
   <% @collection_items.each_with_index do |item, index| %>
       <tr>
@@ -58,12 +57,11 @@ $(function () {
       debugger;
       for (i = 0; i < data["items"].length; i++) {
         var obj = data["items"][i];
+        var itemId = obj["id"];
         var itemTitle = obj["name"];
         var itemBrand = obj["brand"];
-        var itemPurchaseDate = obj["purchase_date"]
-        var itemCost = obj["cost"]
 
-        clxItems += itemBrand + " " + itemTitle + "<br>" + "Purchase Date: " + itemPurchaseDate + "<br>" + "Cost: " + itemCost + "<br><br>";
+        clxItems += "<a href='collections/" + nextId + "/items/" + itemId + "'>" + " " + itemBrand + " " + itemTitle + "<br></a>";
       }
       debugger;
       $(".hitems").html(clxItems);
