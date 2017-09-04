@@ -24,7 +24,36 @@
   <% end %>
 </p>
 
+<div id="itemResult">
+  <h2 id="item"></h2>
+  <p id="itemBody"></p>
+</div>
+
 <p>
   <%= link_to 'Cancel', collections_path %>
 </p>
+
+
+<script type="text/javascript" charset="utf-8">
+  $(function () {
+    $('form').submit(function(event) {
+      //prevent form from submitting the default way
+      event.preventDefault();
+      var values = $(this).serialize();
+      debugger;
+      var posting = $.post(this["action"], values);
+      debugger;
+      posting.done(function(data) {
+        var item = data;
+        debugger;
+        $("#item").text(item["title"]);
+        $("#itemBody").text(item["description"]);
+      });
+    });
+  });
+</script>
+
+
+
+
 
