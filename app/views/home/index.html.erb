@@ -2,8 +2,29 @@
 
 <h4>Welcome! You are signed in as <%= current_user.email %>.<h4>
 
-<h3><%= link_to 'View All Collections', collections_path %></h3>
+<h3><a href="#" class="here" >View All Collections</a></h3>
+
+<h4 class="collections" data-id=""></h4>
 
 <h3><%= link_to 'View All Items', items_path %></h3>
 
 
+
+<script type="text/javascript" charset="utf-8">
+$(function() {
+  $(".here").click(function() {
+    $.get("/collections.json", function(data) {
+
+      var collections = "";
+      
+      for (i = 0; i < data.length; i++) {
+        var collection = data[i]["title"];
+        var collectionId = data[i]["id"];
+        collections += "<a href='../collections/" + collectionId + "'> " + collection + "<br></a>";
+      }
+      $(".collections").html(collections);
+    });
+    return false;
+  });  
+});
+</script>
