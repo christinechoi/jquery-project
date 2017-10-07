@@ -11,7 +11,8 @@
 
 
 <script type="text/javascript" charset="utf-8">
-$(function() {
+$(document).ready(function() {
+
   $(".here").click(function() {
     $.get("/collections.json", function(data) {
 
@@ -20,11 +21,22 @@ $(function() {
       for (i = 0; i < data.length; i++) {
         var collection = data[i]["title"];
         var collectionId = data[i]["id"];
-        collections += "<a href='../collections/" + collectionId + "'> " + collection + "<br></a>";
+        collections += "<a href='#'../collections/" + collectionId + "'" + "class='items' > " + collection + "<br></a>";
       }
       $(".collections").html(collections);
     });
     return false;
-  });  
+  }); 
+
+  $(".items").click(function() {
+    
+    $.get("/collections.json", function(data) {
+      debugger;
+    });
+  });
+
+
+
+
 });
 </script>
