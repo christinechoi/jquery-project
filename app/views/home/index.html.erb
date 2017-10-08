@@ -5,6 +5,14 @@
 <h3><a href="#" class="here" >View All Collections</a></h3>
 
 <h4 class="collections" data-id=""></h4>
+<h4 class="items" data-id=""></h4>
+
+<h4 id="test"></h4>
+
+
+
+
+
 
 <h3><%= link_to 'View All Items', items_path %></h3>
 
@@ -19,24 +27,65 @@ $(document).ready(function() {
       var collections = "";
       
       for (i = 0; i < data.length; i++) {
+      
+        var a = document.createElement('a');
+        var br = document.createElement("br");
+
         var collection = data[i]["title"];
         var collectionId = data[i]["id"];
-        collections += "<a href='#'../collections/" + collectionId + "'" + "class='items' > " + collection + "<br></a>";
+
+
+        var linkText = document.createTextNode(collection);
+        a.appendChild(linkText);
+        a.setAttribute('href', 'javascript:void(0)');
+        a.setAttribute('class', 'democlass');
+        a.setAttribute('id', collectionId);
+        document.getElementById("test").appendChild(a);
+        document.getElementById("test").appendChild(br);
+
+        //add clx's id as unique id selector; use it to get specific items upon clicking
+
+        // var collection = data[i]["title"];
+        // var collectionId = data[i]["id"];
+        // collections += "<a href=''../collections/" + collectionId + "'" + "class='items' > " + collection + "<br></a>";
       }
-      $(".collections").html(collections);
+       
+      //$(".collections").html(collections);
+      //debugger;
     });
     return false;
   }); 
 
-  $(".items").click(function() {
-    
-    $.get("/collections.json", function(data) {
-      debugger;
-    });
-  });
-
-
-
 
 });
+
+$(document).on('click', '.democlass', function(e) {
+  var collectionId = this.id;
+  
+  $.get("/collections/" + collectionId + ".json", function(data) {
+    
+    var items = "";
+    var item = data["items"];
+    debugger;
+    for (i = 0; i < data.length; i++) { 
+      debugger;
+      // var item = data["items"][i]; //why is this line not being hit? why is item undefined?
+      debugger;
+      var itemName = item[i]["name"];
+      var itemBrand = item[i]["brand"];
+      var itemDescription = item[i]["description"];
+      var itemCost = item[i]["cost"];
+      var itemPurchaseDate = item[i]["purchase_date"];
+      debugger;
+
+      items += "<a href=''../collections/" + collectionId + "'" + itemId + "<br></a>";
+
+    }
+
+    $(".items").html(items);
+    debugger;
+  });
+});
+
+
 </script>
