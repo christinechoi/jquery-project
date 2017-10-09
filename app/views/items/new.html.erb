@@ -24,8 +24,8 @@
   <% end %>
 </p>
 
-<div id="itemResult">
-  <h2 id="item"></h2>
+<div>
+  <h2 id="itemName"></h2>
   <p id="itemBody"></p>
 </div>
 
@@ -37,16 +37,15 @@
 <script type="text/javascript" charset="utf-8">
   $(function () {
     $('form').submit(function(event) {
-      //prevent form from submitting the default way
       event.preventDefault();
       var values = $(this).serialize();
-      debugger;
+      // var posting = $.post('/items', values); //from lesson. why not work?
       var posting = $.post(this["action"], values);
-      debugger;
       posting.done(function(data) {
-        var item = data;
+        var item = data["brand"] + " " + data["name"]
         debugger;
-        $("#item").text(item["title"]);
+
+        $("#itemName").text(item);
         $("#itemBody").text(item["description"]);
       });
     });
