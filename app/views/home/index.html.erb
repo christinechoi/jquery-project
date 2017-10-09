@@ -6,84 +6,72 @@
 
 <h4 class="collections" data-id=""></h4>
 <h4 class="items" data-id=""></h4>
-
 <h4 id="test"></h4>
-
-
-
-
-
 
 <h3><%= link_to 'View All Items', items_path %></h3>
 
 
-
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
-
-  $(".here").click(function() {
+  $(".here").on("click", function() {
+    $(this).off("click");
     $.get("/collections.json", function(data) {
 
       var collections = "";
       
       for (i = 0; i < data.length; i++) {
-      
-        var a = document.createElement('a');
-        var br = document.createElement("br");
 
+        var a = document.createElement("a"); 
+        var br = document.createElement("br");
+        var p = document.createElement("p");
         var collection = data[i]["title"];
         var collectionId = data[i]["id"];
-
-
         var linkText = document.createTextNode(collection);
+        var body = document.getElementById("test");
+
         a.appendChild(linkText);
         a.setAttribute('href', 'javascript:void(0)');
         a.setAttribute('class', 'democlass');
         a.setAttribute('id', collectionId);
-        document.getElementById("test").appendChild(a);
-        document.getElementById("test").appendChild(br);
+        a.setAttribute('style', 'font-size: 100%;');
+        p.setAttribute('id', collectionId);
+        p.setAttribute('class', 'itemclass');
 
-        //add clx's id as unique id selector; use it to get specific items upon clicking
-
-        // var collection = data[i]["title"];
-        // var collectionId = data[i]["id"];
-        // collections += "<a href=''../collections/" + collectionId + "'" + "class='items' > " + collection + "<br></a>";
+        body  .appendChild(a);
+        body  .appendChild(br);
+        body  .appendChild(p);
       }
-       
-      //$(".collections").html(collections);
-      //debugger;
     });
     return false;
   }); 
-
-
 });
 
-$(document).on('click', '.democlass', function(e) {
+
+$(document).on('click', '.democlass', function() {
+  // $(this).off('click', '.democlass', function()); //this line makes view all collections link do nothing
+
   var collectionId = this.id;
-  
+  var items = "";
   $.get("/collections/" + collectionId + ".json", function(data) {
     
-    var items = "";
     var item = data["items"];
-    debugger;
-    for (i = 0; i < data.length; i++) { 
-      debugger;
-      // var item = data["items"][i]; //why is this line not being hit? why is item undefined?
-      debugger;
-      var itemName = item[i]["name"];
-      var itemBrand = item[i]["brand"];
-      var itemDescription = item[i]["description"];
-      var itemCost = item[i]["cost"];
-      var itemPurchaseDate = item[i]["purchase_date"];
-      debugger;
+    
+    for (i = 0; i < data.items.length; i++) { 
+        var a = document.createElement("a"); 
+        var br = document.createElement("br");
+        var title  = item[i]["name"];
+        var itemId = item[i]["id"];
+        var linkText = document.createTextNode(title);
 
-      items += "<a href=''../collections/" + collectionId + "'" + itemId + "<br></a>";
+        a.appendChild(linkText);
+        a.setAttribute('href', '../collections/' + collectionId + "/items/" + itemId);
+        a.setAttribute('class', 'item');
+        a.setAttribute('style', 'font-size: 75%;');
+        a.setAttribute('id', itemId);
 
+        document.getElementById(collectionId).appendChild(br);
+        document.getElementById(collectionId).appendChild(a);
     }
-
-    $(".items").html(items);
-    debugger;
   });
 });
 
