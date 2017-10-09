@@ -37,21 +37,23 @@ $(document).ready(function () {
 
     var itemDetails = "" 
     $.get("/collections/" + collectionId + ".json", function(data) {
-      debugger;
+      //debugger;
       var attr = data["items"] //i need the item's id in order to do data["items"][item's id]
       
       var itemDescription = attr["description"]
       var itemPurchaseDate = attr["purchase_date"]
       var itemCost = attr["cost"]
-      debugger;
+      // debugger;
       itemDetails += itemDescription + itemPurchaseDate + itemCost
     })
-    debugger;
+    
     $(".item-json").html(itemDetails);
   })
 
 
   $(".js-next").on("click", function() {
+    $(".item").hide();
+
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/collections/" + nextId + ".json", function(data) {
   
