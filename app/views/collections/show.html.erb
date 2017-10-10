@@ -1,14 +1,11 @@
-<table>
-  <h2 class="collectionTitle"><%= @collection.title %></h2>
-  
-  <h2 class="hitems"><% @collection.items.each do |item| %> </h2>
-    <h3 class="item" data-id"<%= item.id %>"><%= link_to "#{item.brand} #{item.name}", collection_item_path(item.collection_id, item.id) %></h3>
-    
+<p>
+  <h4 class="collectionTitle"><%= @collection.title %></h4>
+  <h4 class="hitems"><% @collection.items.each do |item| %></h4>
+    <h4 class="item" data-id"<%= item.id %>"><%= link_to "#{item.brand} #{item.name}", collection_item_path(item.collection_id, item.id) %></h4>
   <% end %>
-</table>
+</p>
 
 <p class="item-json" data-id="<%= @collection.id %>">
-  <h3></h3>
 </p>
 
 <p>
@@ -30,53 +27,39 @@
 </p>
 
 <script type="text/javascript" charset="utf-8">
-
 $(document).ready(function () {
   $(".item").on("click", function() {
     var collectionId = parseInt($(".js-next").attr("data-id"));
-
     var itemDetails = "" 
     $.get("/collections/" + collectionId + ".json", function(data) {
-      //debugger;
-      var attr = data["items"] //i need the item's id in order to do data["items"][item's id]
-      
+      var attr = data["items"]
       var itemDescription = attr["description"]
       var itemPurchaseDate = attr["purchase_date"]
       var itemCost = attr["cost"]
       // debugger;
       itemDetails += itemDescription + itemPurchaseDate + itemCost
     })
-    
     $(".item-json").html(itemDetails);
   })
 
-
   $(".js-next").on("click", function() {
     $(".item").hide();
-
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/collections/" + nextId + ".json", function(data) {
-  
       $(".collectionTitle").text(data["title"]);
-
       var clxItems = ""
-      
       for (i = 0; i < data["items"].length; i++) {
         var obj = data["items"][i];
         var itemId = obj["id"];
         var itemTitle = obj["name"];
         var itemBrand = obj["brand"];
-        
-        clxItems += "<a href=" + nextId + "/items/" + obj.id + "'>" + " " + obj.brand + " " + obj.name + "<br></a>";
+        clxItems += "<h4><a href=" + nextId + "/items/" + obj.id + "'>" + " " + obj.brand + " " + obj.name + "</h4></a>";
       }
-      
       $(".hitems").html(clxItems);
-      // re-set the id to current on the link
       $(".js-next").attr("data-id", data["id"]);
     });
   });
 });  
-
 </script>
 
 

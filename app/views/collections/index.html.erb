@@ -1,21 +1,27 @@
 
-<h2>Your collections:</h2><br>
+<h2>Your collections:</h2>
+<h3 class="collections" data-id=""></h3>
 
-<h4 class="collections" data-id=""></h4>
+<p>
+  <h4><%= link_to 'Create New Collection', new_collection_path %></h4>
+</p>
+
 
 
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
-  $.get("/collections.json", function(data) {
+  
+    $.get("/collections.json", function(data) {
 
-    var collections = "";
+      var collections = "";
 
-    for (i = 0; i < data.length; i++) {
-      var collection = data[i]["title"];
-      var collectionId = data[i]["id"];
-      collections += "<a href='collections/" + collectionId + "'> " + collection + "<br></a>";
-    }
-    $(".collections").html(collections);
-  });
+      for (i = 0; i < data.length; i++) {
+        var collection = data[i]["title"];
+        var collectionId = data[i]["id"];
+        collections += "<a href='collections/" + collectionId + "'> " + collection + "<br></a>";
+      }
+      $(".collections").html(collections);
+    });
+ 
 });
 </script>
