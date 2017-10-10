@@ -19,7 +19,7 @@
 </p>
 
 <p>
-  <%= link_to 'Back to Collections', collections_path %>
+  <%= link_to 'Back to Collections', root_path %>
 </p>
 
 <p>
@@ -36,7 +36,6 @@ $(document).ready(function () {
       var itemDescription = attr["description"]
       var itemPurchaseDate = attr["purchase_date"]
       var itemCost = attr["cost"]
-      // debugger;
       itemDetails += itemDescription + itemPurchaseDate + itemCost
     })
     $(".item-json").html(itemDetails);
