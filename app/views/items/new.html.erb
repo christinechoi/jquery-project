@@ -29,27 +29,70 @@
   <p id="itemBody"></p>
 </div>
 
+<div id="testing">
+
+</div>
+
 <p>
-  <%= link_to 'Cancel', collections_path %>
+  <%= link_to 'Go back', collections_path %>
 </p>
 
 
 <script type="text/javascript" charset="utf-8">
+
+  
+
   $(function () {
     $('form').submit(function(event) {
       event.preventDefault();
+      
+      var y = $('form').serializeArray();
+
+      var brand = y[2]["value"];
+      var name = y[3]["value"];
+      var description = y[4]["value"];
+      var cost = y[5]["value"];
+      var purchase_date = y[6]["value"];
+
+      var x = JSON.stringify( $('form').serializeArray() ); // json object?
+      var obj = new Item(brand, name, description, cost, purchase_date);
+
+      debugger;
+
+
+      $("#itemName").text("You just added: " + obj["brand"] + " " + obj["name"]);
+      $("#itemBody").text(obj["description"]);
+
+
       var values = $(this).serialize();
+      //var obj = JSON.parse(values);
       // var posting = $.post('/items', values); //from lesson. why not work?
       var posting = $.post(this["action"], values);
-      posting.done(function(data) {
-        var item = data["brand"] + " " + data["name"]
-        debugger;
+      // posting.done(function(data) {
+      //   debugger;
+      //   //var obj = JSON.pa
+      //   var item = data["brand"] + " " + data["name"]
+      //   debugger;
 
-        $("#itemName").text(item);
-        $("#itemBody").text(item["description"]);
-      });
+      //   $("#itemName").text(item);
+      //   $("#itemBody").text(item["description"]);
+      // });
     });
   });
+
+
+  function Item(brand, name, description, cost, purchase_date) {
+    this.brand = brand;
+    this.name = name;
+    this.description = description;
+    this.cost = cost;
+    this.purchase_date = purchase_date;
+    this.doSomething = function() {
+      console.log('hayyy');
+    }
+  }
+
+
 </script>
 
 
