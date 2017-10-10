@@ -13,67 +13,97 @@
 
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
-  $(".here").on("click", function() {
+
+
+  $(".here").on("click", function() { // this renders collections
     $(this).off("click");
+
+
     $.get("/collections.json", function(data) {
-
-      var collections = "";
-      
-      for (i = 0; i < data.length; i++) {
-
-        var a = document.createElement("a"); 
-        var br = document.createElement("br");
-        var p = document.createElement("p");
-        var collection = data[i]["title"];
-        var collectionId = data[i]["id"];
-        var linkText = document.createTextNode(collection);
-        var body = document.getElementById("test");
-
-        a.appendChild(linkText);
-        a.setAttribute('href', 'javascript:void(0)');
-        a.setAttribute('class', 'democlass');
-        a.setAttribute('id', collectionId);
-        a.setAttribute('style', 'font-size: 100%;');
-        p.setAttribute('id', collectionId);
-        p.setAttribute('class', 'itemclass');
-
-        body  .appendChild(a);
-        body  .appendChild(br);
-        body  .appendChild(p);
-      }
+ 
+     var collections = "";
+ 
+     for (i = 0; i < data.length; i++) {
+       var collection = data[i]["title"];
+       var collectionId = data[i]["id"];
+       collections += "<a href='../collections/" + collectionId + "'> " + collection + "<br></a>";
+     }
+     $(".collections").html(collections);
     });
     return false;
-  }); 
-});
-
-
-$(document).on('click', '.democlass', function() {
-  // $(this).off('click', '.democlass', function()); //this line makes view all collections link do nothing
-
-  var collectionId = this.id;
-  var items = "";
-  $.get("/collections/" + collectionId + ".json", function(data) {
-    
-    var item = data["items"];
-    
-    for (i = 0; i < data.items.length; i++) { 
-        var a = document.createElement("a"); 
-        var br = document.createElement("br");
-        var title  = item[i]["name"];
-        var itemId = item[i]["id"];
-        var linkText = document.createTextNode(title);
-
-        a.appendChild(linkText);
-        a.setAttribute('href', '../collections/' + collectionId + "/items/" + itemId);
-        a.setAttribute('class', 'item');
-        a.setAttribute('style', 'font-size: 75%;');
-        a.setAttribute('id', itemId);
-
-        document.getElementById(collectionId).appendChild(br);
-        document.getElementById(collectionId).appendChild(a);
-    }
   });
+
+
+
+
+
+
+    // $.get("/collections.json", function(data) {
+
+    //   var collections = "";
+      
+    //   for (i = 0; i < data.length; i++) {
+
+    //     var a = document.createElement("a"); 
+    //     var br = document.createElement("br");
+    //     var p = document.createElement("p");
+    //     var collection = data[i]["title"];
+    //     var collectionId = data[i]["id"];
+    //     var linkText = document.createTextNode(collection);
+    //     var body = document.getElementById("test");
+
+    //     a.appendChild(linkText);
+    //     a.setAttribute('href', 'javascript:void(0)');
+    //     a.setAttribute('class', 'democlass');
+    //     a.setAttribute('id', collectionId);
+    //     a.setAttribute('style', 'font-size: 100%;');
+    //     p.setAttribute('id', collectionId);
+    //     p.setAttribute('class', 'itemclass');
+
+    //     body.appendChild(a);
+    //     body.appendChild(br);
+    //     body.appendChild(p);
+    //   }
+    // });
+    // return false;
+  // }); 
 });
+
+
+// $("#test").on("click", ".democlass", function(e) {
+  
+//   // $(this).off('click', '.democlass', function()); //this line makes view all collections link do nothing
+
+//   // $(this).off("click"); // this doesn't prevent all items from rendering again
+
+//   // e.stopPropagation(); // this doesn't either 
+
+//   // $('.democlass').off('click'); // nope
+
+//   var collectionId = this.id;
+//   var items = "";
+//   $.get("/collections/" + collectionId + ".json", function(data) {
+    
+//     var item = data["items"];
+    
+//     for (i = 0; i < data.items.length; i++) { 
+//         var a = document.createElement("a"); 
+//         var br = document.createElement("br");
+//         var title  = item[i]["name"];
+//         var itemId = item[i]["id"];
+//         var linkText = document.createTextNode(title);
+
+//         a.appendChild(linkText);
+//         a.setAttribute('href', '../collections/' + collectionId + "/items/" + itemId);
+//         a.setAttribute('class', 'item');
+//         a.setAttribute('style', 'font-size: 75%;');
+//         a.setAttribute('id', itemId);
+
+//         document.getElementById(collectionId).appendChild(br);
+//         document.getElementById(collectionId).appendChild(a);
+//     }
+//   });
+// });
 
 
 </script>
