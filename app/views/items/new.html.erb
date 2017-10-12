@@ -23,11 +23,9 @@
 </p>
 
 <div>
-  <h2 id="itemName"></h2>
+  <h3 id="itemName"></h3>
   <p id="itemBody"></p>
 </div>
-
-<div id="testing"></div>
 
 <p>
   <%= link_to 'Go back', root_path %>
@@ -44,9 +42,10 @@
       var description = y[4]["value"];
       var cost = y[5]["value"];
       var purchase_date = y[6]["value"];
-      var x = JSON.stringify( $('form').serializeArray() ); // json object?
+      var x = JSON.stringify( $('form').serializeArray() ); 
       var obj = new Item(brand, name, description, cost, purchase_date);
-      $("#itemName").text("You just added: " + obj["brand"] + " " + obj["name"]);
+      obj.doSomething();
+      $("#itemName").text(obj["brand"] + " " + obj["name"]);
       $("#itemBody").text(obj["description"]);
       var values = $(this).serialize();
       var posting = $.post(this["action"], values);
@@ -60,9 +59,10 @@
     this.cost = cost;
     this.purchase_date = purchase_date;
     this.doSomething = function() {
-      console.log('hayyy');
+      alert(`You just added ${this.brand} ${this.name}.`);
     }
   }
+
 </script>
 
 
