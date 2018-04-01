@@ -45,16 +45,32 @@ $(document).ready(function () {
     $(".item").hide();
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/collections/" + nextId + ".json", function(data) {
-      $(".collectionTitle").text(data["title"]);
-      var clxItems = ""
-      for (i = 0; i < data["items"].length; i++) {
-        var obj = data["items"][i];
-        var itemId = obj["id"];
-        var itemTitle = obj["name"];
-        var itemBrand = obj["brand"];
-        clxItems += "<h4><a href=" + nextId + "/items/" + obj.id + "'>" + " " + obj.brand + " " + obj.name + "</h4></a>";
+      $(".collectionTitle").text(data.title);
+      
+
+      // Sort items alphabeticall before appendint to collectionItemsHTML
+
+      var sortedItems = data.items.sort(function(a, b) {
+        var nameA = a.brand.toUpperCase();
+        var nameB = b.brand.toUpperCase();
+
+        if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+
+          // names must be equal
+          return 0;
+      });
+      // DOM STUFF
+      var collectionItemsHTML = ""
+      for (var i = 0; i < sortedItems.length; i++) {
+        var item = sortedItems[i];
+        collectionItemsHTML += "<h4><a href=" + nextId + "/items/" + item.id + "'>" + " " + item.brand + " " + item.name + "</h4></a>";
       }
-      $(".hitems").html(clxItems);
+      $(".hitems").html(collectionItemsHTML);
       $(".js-next").attr("data-id", data["id"]);
     });
   });
