@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+ruby "2.4.1"
 
 gem 'devise'
 gem 'omniauth'
@@ -59,7 +60,6 @@ end
 
 group :production do
   gem 'pg'
-  gem 'rails_12factor'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
