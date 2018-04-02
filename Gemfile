@@ -11,7 +11,7 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'active_model_serializers'
-gem 'pg'
+gem "pg", ">= 0.18", "< 2.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
